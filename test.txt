@@ -1,0 +1,13 @@
+# Testing scripts
+
+docker rm -f deploy01 
+docker rmi ubuntu14_jdk8_tomcat8_mysql5:v1
+docker build --no-cache=true -t=ubuntu14_jdk8_tomcat8_mysql5:v1 .
+docker create --name deploy01 -i -t -h deploy01 -v /usr/local/src/solution/examples:/usr/local/src/lib/tomcat/default/webapps/ROOT -p 9022:22 -p 9036:3306 -p 9080:8080 ubuntu14_jdk8_tomcat8_mysql5:v1 
+docker start deploy01 
+docker logs deploy01
+
+docker exec -it deploy01 bash /sbin/change.sh password 
+
+ssh root@localhost -p 9022
+rm -rf /root/.ssh/known_hosts
