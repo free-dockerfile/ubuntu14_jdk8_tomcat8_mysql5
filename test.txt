@@ -11,3 +11,7 @@ docker exec -it deploy01 bash /sbin/change.sh password
 
 ssh root@localhost -p 9022
 rm -rf /root/.ssh/known_hosts
+
+docker create --name deploy0922 -i -t -h deploy0922 -p 4120:4200 -p 9122:22 -p 9136:3306 -p 9180:8080 ubuntu14_jdk8_tomcat8_mysql5:v2 
+
+docker rm -f deploy0922

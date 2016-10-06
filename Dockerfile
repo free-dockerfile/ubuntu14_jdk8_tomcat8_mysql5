@@ -25,13 +25,20 @@ RUN apt-get update
 RUN apt-get install -y curl
 RUN apt-get install -y vim 
 RUN apt-get install -y openssh-server 
+RUN apt-get install shellinabox
+COPY shellinabox /etc/default/
 
 RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
 
+RUN groupadd basegroup
+RUN useradd -g basegroup sshuser
+
 RUN echo 'root:'$DEV_PWD | chpasswd
+RUN echo 'sshuser:'$DEV_PWD | chpasswd
+
 RUN /sbin/install.sh 
 RUN rm /sbin/install.sh 
 
-EXPOSE 22 3306 8080
+EXPOSE 22 3306 4200 8080
 ENTRYPOINT ["/etc/init.d/entrypoint.sh"]

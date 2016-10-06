@@ -1,5 +1,8 @@
 #!/bin/bash
 
+mkdir /usr/local/src
+ln -s /usr/local/src /src
+
 JAVA_INSTALL=/usr/local/src/lib/java
 TOMCAT_INSTALL=/usr/local/src/lib/tomcat
 ANT_INSTALL=/usr/local/src/lib/ant
@@ -26,8 +29,7 @@ rm jdk*.tar.gz
 ln -s jdk* default
 
 cd ${TOMCAT_INSTALL} 
-wget -O apache-tomcat-8.5.4.tar.gz http://apache.communilink.net/tomcat/tomcat-8/v8.5.4/bin/apache-tomcat-8.5.4.tar.gz
-#wget -O apache-tomcat-8.5.4.tar.gz http://download.jrails.net/apache-tomcat-8.5.4.tar.gz 
+wget -O apache-tomcat-8.5.5.tar.gz http://apache.communilink.net/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz 
 sleep 1s
 tar zxf apache-tomcat*.tar.gz -C ${TOMCAT_INSTALL}
 rm apache-tomcat*.tar.gz

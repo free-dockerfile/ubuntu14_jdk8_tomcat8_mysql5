@@ -12,6 +12,9 @@ echo '---Start Services---'
 /etc/init.d/ssh start
 
 sleep 1s
+/etc/init.d/shellinabox start
+
+sleep 1s
 /etc/init.d/mysql start
 
 sleep 1s
