@@ -4,22 +4,23 @@ MAINTAINER jack@1225.hk
 ENV DEV_PWD dev2016
 ENV LANG C.UTF8
 ENV LC_ALL C.UTF-8
-RUN echo 'export LANG='$LANG >> /etc/profile
-RUN echo 'export LC_ALL='$LC_ALL >> /etc/profile
-RUN echo 'export DEV_PWD='$DEV_PWD >> /etc/profile
 
-ADD entrypoint.sh /etc/init.d/entrypoint.sh
-ADD install.sh /sbin/install.sh
-ADD change.sh /sbin/change.sh
+ADD server_profile.sh /etc/profile.d/server_profile.sh
+RUN chmod a+x /etc/profile.d/server_profile.sh
+RUN echo 'export LANG='$LANG >> /etc/profile.d/server_profile.sh
+RUN echo 'export LC_ALL='$LC_ALL >> /etc/profile.d/server_profile.sh
+RUN echo 'export DEV_PWD='$DEV_PWD >> /etc/profile.d/server_profile.sh
+
+COPY entrypoint.sh /etc/init.d/
+COPY install.sh /sbin/
+COPY change.sh /sbin/
 RUN chmod a+x /etc/init.d/entrypoint.sh
 RUN chmod a+x /sbin/install.sh
 RUN chmod a+x /sbin/change.sh
-#RUN mv /etc/apt/sources.list /etc/apt/sources.list_backup
-#ADD sources.list /etc/apt/sources.list
 
 RUN echo "Asia/Hong_Kong" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata 
-#RUN ntpdate -s ntp.ubuntu.com
+RUN ntpdate -s ntp.ubuntu.com
 RUN apt-get clean 
 RUN apt-get update
 RUN apt-get install -y curl
@@ -40,5 +41,6 @@ RUN echo 'sshuser:'$DEV_PWD | chpasswd
 RUN /sbin/install.sh 
 RUN rm /sbin/install.sh 
 
-EXPOSE 22 3306 4200 8080
+#The 8000 for spare port
+EXPOSE 22 3306 4200 8080 8000
 ENTRYPOINT ["/etc/init.d/entrypoint.sh"]

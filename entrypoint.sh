@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/profile
+source /etc/profile.d/server_profile.sh
 
 echo '---Debug Messages---'
 java -version

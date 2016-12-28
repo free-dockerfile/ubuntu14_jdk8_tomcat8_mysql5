@@ -20,5 +20,5 @@ mysql -udbappuser -p''$DB_APP_PWD appdb < /usr/local/src/lib/tomcat/default/weba
 sleep 1s
 echo "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('"$DB_ADMIN_PWD"');" | mysql -uroot -p''$DEV_PWD
 sleep 1s
-sed -i 's/export DEV_PWD='$DEV_PWD'//g' /etc/profile
+sed -i 's/export DEV_PWD='$DEV_PWD'//g' /etc/profile.d/server_profile.sh
 rm /sbin/change.sh
